@@ -1,0 +1,17 @@
+//
+//  FetchChallengeApp.swift
+//  FetchChallenge
+//
+//  Created by Anna Myshliakova on 1/25/25.
+//
+
+import SwiftUI
+
+@main
+struct FetchChallengeApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
