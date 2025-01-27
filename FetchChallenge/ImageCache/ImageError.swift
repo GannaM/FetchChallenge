@@ -7,5 +7,4 @@
 
 enum ImageError: Error {
     case badImageData
-    case badURL
 }

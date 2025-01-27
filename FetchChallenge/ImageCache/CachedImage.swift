@@ -26,17 +26,16 @@ struct CachedImage: View {
             }
     }
     
+    @ViewBuilder
     private var content: some View {
-        VStack {
-            switch imageState {
-            case .loading:
-                loadingView
-            case .loaded(let uiImage):
-                Image(uiImage: uiImage)
-                    .resizable()
-            case .failed:
-                errorView
-            }
+        switch imageState {
+        case .loading:
+            loadingView
+        case .loaded(let uiImage):
+            Image(uiImage: uiImage)
+                .resizable()
+        case .failed:
+            errorView
         }
     }
     
@@ -60,7 +59,7 @@ struct CachedImage: View {
             return
         }
         
-        Task { @MainActor in
+        Task {
             do {
                 let image = try await imageCacheService.getImage(for: url)
                 imageState = .loaded(image)
