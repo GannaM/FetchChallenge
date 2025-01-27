@@ -10,10 +10,6 @@ import SwiftUI
 struct RecipeCellView: View {
     var recipe: Recipe
     
-    @State var uiImage: UIImage = UIImage()
-    
-    @Environment(\.imageCacheService) var imageCacheService: ImageCacheService
-    
     var body: some View {
         HStack(spacing: 10) {
             image
@@ -24,7 +20,7 @@ struct RecipeCellView: View {
     }
     
     private var image: some View {
-        CachedImage(urlString: recipe.photoUrlSmall)
+        CachedImage(url: recipe.photoUrlSmall)
             .frame(width: 100, height: 100)
             .cornerRadius(6)
     }
@@ -43,7 +39,7 @@ struct RecipeCellView: View {
 }
 
 #Preview {
-    RecipeCellView(recipe: Recipe.sample)
+    RecipeCellView(recipe: .sample)
 }
 
 private extension Recipe {
@@ -52,10 +48,10 @@ private extension Recipe {
             id: UUID(),
             cuisine: "American",
             name: "Burger",
-            photoUrlLarge: "sdf",
-            photoUrlSmall: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg",
-            sourceUrl: "sds",
-            youtubeUrl: "dfd"
+            photoUrlLarge: nil,
+            photoUrlSmall: URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg")!,
+            sourceUrl: nil,
+            youtubeUrl: nil
         )
     }
 }

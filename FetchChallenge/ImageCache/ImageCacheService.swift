@@ -16,9 +16,7 @@ final class ImageCacheService: Sendable {
         self.cache = .shared
     }
     
-    func getImage(for urlString: String) async throws -> UIImage {
-        guard let url = URL(string: urlString) else { throw ImageError.badURL }
-
+    func getImage(for url: URL) async throws -> UIImage {
         let data = try await getImageData(for: url)
         guard let image = UIImage(data: data) else { throw ImageError.badImageData }
         

@@ -5,8 +5,8 @@
 //  Created by Anna Myshliakova on 1/25/25.
 //
 
-import Foundation
 import Combine
+import SwiftUI
 
 enum ViewState {
     case loading
@@ -35,6 +35,12 @@ final class RecipesViewModel: ObservableObject {
     @Published var selectedCuisine: String?
     @Published var searchText: String = ""
     
+    @Published var selectedRecipe: Recipe?
+    
+    var isConfirmationSheetPresented: Binding<Bool> {
+        .init(get: { self.selectedRecipe != nil }, set: { _ in self.selectedRecipe = nil })
+    }
+    
     init(apiService: APIService = APIServiceImp()) {
         self.apiService = apiService
         
@@ -61,6 +67,16 @@ final class RecipesViewModel: ObservableObject {
         Task {
             await loadData()
         }
+    }
+    
+    func onRecipeTap(_ recipe: Recipe) {        
+        if recipe.sourceUrl != nil || recipe.youtubeUrl != nil {
+            selectedRecipe = recipe
+        }
+    }
+    
+    func open(url: URL) {
+        UIApplication.shared.open(url)
     }
     
     private static func filter(_ recipes: [Recipe], by cuisine: String?) -> [Recipe] {

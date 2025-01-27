@@ -15,10 +15,10 @@ struct Recipe: Decodable, Identifiable, Hashable {
     var id: UUID
     var cuisine: String
     var name: String
-    var photoUrlLarge: String?
-    var photoUrlSmall: String?
-    var sourceUrl: String?
-    var youtubeUrl: String?
+    var photoUrlLarge: URL?
+    var photoUrlSmall: URL?
+    var sourceUrl: URL?
+    var youtubeUrl: URL?
     
     enum CodingKeys: String, CodingKey {
         case id = "uuid"
@@ -29,5 +29,4 @@ struct Recipe: Decodable, Identifiable, Hashable {
         case sourceUrl = "source_url"
         case youtubeUrl = "youtube_url"
     }
-    
 }

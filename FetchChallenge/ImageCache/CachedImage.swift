@@ -14,7 +14,7 @@ fileprivate enum ImageState {
 }
 
 struct CachedImage: View {
-    var urlString: String?
+    var url: URL?
     
     @Environment(\.imageCacheService) private var imageCacheService: ImageCacheService
     @State private var imageState: ImageState = .loading
@@ -55,14 +55,14 @@ struct CachedImage: View {
     }
     
     private func loadImage() {
-        guard let urlString else {
+        guard let url else {
             imageState = .failed
             return
         }
         
         Task { @MainActor in
             do {
-                let image = try await imageCacheService.getImage(for: urlString)
+                let image = try await imageCacheService.getImage(for: url)
                 imageState = .loaded(image)
             } catch {
                 imageState = .failed
@@ -72,5 +72,5 @@ struct CachedImage: View {
 }
 
 #Preview {
-    CachedImage(urlString: "nil")
+    CachedImage(url: nil)
 }

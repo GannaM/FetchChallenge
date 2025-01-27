@@ -31,6 +31,23 @@ struct RecipesView: View {
         .searchable(text: $viewModel.searchText, placement: .automatic, prompt: searchPromptText)
         .animation(.easeInOut, value: viewModel.viewState)
         .animation(.easeInOut, value: viewModel.filteredRecipes.isEmpty)
+        .confirmationDialog("Reference", isPresented: viewModel.isConfirmationSheetPresented, presenting: viewModel.selectedRecipe, actions: { recipe in
+            
+            if let youtubeUrl = recipe.youtubeUrl {
+                Button("YouTube") {
+                    viewModel.open(url: youtubeUrl)
+                }
+            }
+            
+            if let sourceUrl = recipe.sourceUrl {
+                Button("Source") {
+                    viewModel.open(url: sourceUrl)
+                }
+            }
+            
+        }, message: { recipe in
+            Text(recipe.name)
+        })
     }
     
     @ViewBuilder
@@ -81,18 +98,18 @@ struct RecipesView: View {
         List {
             ForEach(viewModel.filteredRecipes) { recipe in
                 RecipeCellView(recipe: recipe)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        // TODO: handle taps
-                        // viewModel.onRecipeTap(recipe)
-                    }
                     .padding(.trailing, -16)
+                    .contentShape(.rect)
+                    .onTapGesture {
+                        viewModel.onRecipeTap(recipe)
+                    }
             }
         }
         .listStyle(.grouped)
         .refreshable {
             await viewModel.loadData()
         }
+        
     }
     
     private var filterButton: some View {
