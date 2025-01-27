@@ -1,0 +1,33 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "All" : {
+      "comment" : "Represents all recipes filter option"
+    },
+    "Oh-oh! No recipes found." : {
+
+    },
+    "Oops! Something went wrong.\nPlease, try again later!" : {
+
+    },
+    "Recipes" : {
+
+    },
+    "Reference" : {
+
+    },
+    "Reload" : {
+      "comment" : "Reload button label"
+    },
+    "Search" : {
+      "comment" : "Placeholder text for search field"
+    },
+    "Source" : {
+
+    },
+    "YouTube" : {
+
+    }
+  },
+  "version" : "1.0"
+}

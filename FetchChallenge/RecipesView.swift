@@ -109,7 +109,6 @@ struct RecipesView: View {
         .refreshable {
             await viewModel.loadData()
         }
-        
     }
     
     private var filterButton: some View {
