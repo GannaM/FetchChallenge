@@ -28,6 +28,9 @@ struct RecipesView: View {
         .task {
             await viewModel.loadData()
         }
+        .searchable(text: $viewModel.searchText, placement: .automatic, prompt: searchPromptText)
+        .animation(.easeInOut, value: viewModel.viewState)
+        .animation(.easeInOut, value: viewModel.filteredRecipes.isEmpty)
     }
     
     @ViewBuilder
@@ -36,9 +39,11 @@ struct RecipesView: View {
         case .loading:
             ProgressView()
         case .data:
-            loadedView
-        case .empty:
-            emptyView
+            if viewModel.filteredRecipes.isEmpty {
+                emptyView
+            } else {
+                loadedView
+            }
         case .error:
             errorView
         }
@@ -67,10 +72,8 @@ struct RecipesView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100, height: 100)
-            Text("No recipes found")
+            Text("Oh-oh! No recipes found.")
                 .bold()
-            Text("Try narrowing down your search")
-                .multilineTextAlignment(.center)
         }
     }
     

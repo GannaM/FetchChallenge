@@ -11,7 +11,6 @@ import Combine
 enum ViewState {
     case loading
     case data
-    case empty
     case error
 }
 
@@ -34,13 +33,15 @@ final class RecipesViewModel: ObservableObject {
     @Published private(set) var filteredRecipes: [Recipe] = []
     
     @Published var selectedCuisine: String?
+    @Published var searchText: String = ""
     
     init(apiService: APIService = APIServiceImp()) {
         self.apiService = apiService
         
-        Publishers.CombineLatest($allRecipes, $selectedCuisine).map { allRecipes, selectedCuisine in
-            let filteredRecipes = Self.filter(allRecipes, by: selectedCuisine)
-            return filteredRecipes
+        Publishers.CombineLatest3($allRecipes, $selectedCuisine, $searchText).map { allRecipes, selectedCuisine, searchText in
+            let filtered = Self.filter(allRecipes, by: selectedCuisine)
+            let searched = Self.filter(filtered, by: searchText)
+            return searched
         }
         .assign(to: &$filteredRecipes)
     }
@@ -49,13 +50,14 @@ final class RecipesViewModel: ObservableObject {
         do {
             let recipes = try await apiService.getRecipes()
             self.allRecipes = recipes
-            viewState = recipes.isEmpty ? .empty : .data
+            viewState = .data
         } catch {
             viewState = .error
         }
     }
     
     func reload() {
+        viewState = .loading
         Task {
             await loadData()
         }
@@ -68,5 +70,17 @@ final class RecipesViewModel: ObservableObject {
         let filteredRecipes = recipes.filter { $0.cuisine.lowercased() == filter }
         
         return filteredRecipes
+    }
+    
+    private static func filter(_ recipes: [Recipe], by searchText: String) -> [Recipe] {
+        guard !searchText.isEmpty else { return recipes }
+        
+        let lowerCaseSearchText = searchText.lowercased()
+        let searchedRecipes: [Recipe] = recipes.filter { recipe in
+            recipe.name.lowercased().contains(lowerCaseSearchText) ||
+            recipe.cuisine.lowercased().contains(lowerCaseSearchText)
+        }
+        
+        return searchedRecipes
     }
 }
