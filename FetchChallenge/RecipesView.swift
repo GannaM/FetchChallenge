@@ -53,8 +53,7 @@ struct RecipesView: View {
             Text("Oops! Something went wrong.\nPlease, try again later!")
                 .multilineTextAlignment(.center)
             Button {
-                // TODO: handle reloading data
-                // viewModel.reload()
+                 viewModel.reload()
             } label: {
                 Text("Reload", comment: "Reload button label")
             }
@@ -68,7 +67,7 @@ struct RecipesView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 100, height: 100)
-            Text("No albums found")
+            Text("No recipes found")
                 .bold()
             Text("Try narrowing down your search")
                 .multilineTextAlignment(.center)
@@ -77,7 +76,7 @@ struct RecipesView: View {
     
     private var loadedView: some View {
         List {
-            ForEach(viewModel.recipes) { recipe in
+            ForEach(viewModel.filteredRecipes) { recipe in
                 RecipeCellView(recipe: recipe)
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -95,9 +94,20 @@ struct RecipesView: View {
     
     private var filterButton: some View {
         Menu {
-            // TODO: add menu data
+            // Nil represents All (no filter selected)
+            ForEach([nil] + viewModel.cuisineList, id: \.self) { cuisine in
+                Button {
+                    viewModel.selectedCuisine = cuisine
+                } label: {
+                    Text(cuisine ?? allFilterText)
+
+                    if viewModel.selectedCuisine == cuisine {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            }
         } label: {
-            Image(systemName: "line.3.horizontal.decrease.circle")
+            Image(systemName: viewModel.selectedCuisine == nil ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
         }
     }
     
@@ -110,7 +120,7 @@ struct RecipesView: View {
     }
     
     private var allFilterText: String {
-        String(localized: "All", comment: "Represents all albums filter option")
+        String(localized: "All", comment: "Represents all recipes filter option")
     }
     
     private var searchPromptText: String {
