@@ -16,7 +16,6 @@ enum ViewState {
 
 @MainActor
 final class RecipesViewModel: ObservableObject {
-    
     private let apiService: APIService
     
     @Published private(set) var viewState: ViewState = .loading
@@ -29,13 +28,12 @@ final class RecipesViewModel: ObservableObject {
     }
     
     @Published private(set) var cuisineList: [String] = []
-    
     @Published private(set) var filteredRecipes: [Recipe] = []
     
     @Published var selectedCuisine: String?
     @Published var searchText: String = ""
-    
     @Published var selectedRecipe: Recipe?
+    @Published var showSettings: Bool = false
     
     var isConfirmationSheetPresented: Binding<Bool> {
         .init(get: { self.selectedRecipe != nil }, set: { _ in self.selectedRecipe = nil })

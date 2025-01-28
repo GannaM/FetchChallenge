@@ -4,6 +4,18 @@
     "All" : {
       "comment" : "Represents all recipes filter option"
     },
+    "Automatic" : {
+      "comment" : "Automatic color scheme title"
+    },
+    "Color scheme" : {
+
+    },
+    "Dark" : {
+      "comment" : "Dark color scheme title"
+    },
+    "Light" : {
+      "comment" : "Light color scheme title"
+    },
     "Oh-oh! No recipes found." : {
 
     },

@@ -23,15 +23,24 @@ struct RecipesView: View {
                         filterButton
                     }
                 }
+                .searchable(text: $viewModel.searchText, placement: .automatic, prompt: searchPromptText)
         }
         .ignoresSafeArea(edges: [.bottom])
         .task {
             await viewModel.loadData()
         }
-        .searchable(text: $viewModel.searchText, placement: .automatic, prompt: searchPromptText)
+        .sheet(isPresented: $viewModel.showSettings) {
+            SettingsView()
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.medium])
+        }
+        
         .animation(.easeInOut, value: viewModel.viewState)
         .animation(.easeInOut, value: viewModel.filteredRecipes.isEmpty)
-        .confirmationDialog("Reference", isPresented: viewModel.isConfirmationSheetPresented, presenting: viewModel.selectedRecipe, actions: { recipe in
+        .confirmationDialog("Reference",
+                            isPresented: viewModel.isConfirmationSheetPresented,
+                            presenting: viewModel.selectedRecipe,
+                            actions: { recipe in
             
             if let youtubeUrl = recipe.youtubeUrl {
                 Button("YouTube") {
@@ -132,7 +141,7 @@ struct RecipesView: View {
     
     private var settingsButton: some View {
         Button {
-//            viewModel.showSettings = true
+            viewModel.showSettings = true
         } label: {
             Image(systemName: "gear")
         }
