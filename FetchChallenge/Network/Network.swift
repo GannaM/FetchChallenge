@@ -12,14 +12,15 @@ protocol Network: Sendable {
     func requestData(_ url: URL) async throws -> Data
 }
 
-final class NetworkImp: Network {
-    private let decoder = JSONDecoder()
-    private let session: URLSession = .shared
-    
+extension Network {
     func requestObject<T: Decodable>(_ url: URL) async throws -> T {
         let data = try await requestData(url)
-        return try decoder.decode(T.self, from: data)
+        return try JSONDecoder().decode(T.self, from: data)
     }
+}
+
+final class NetworkImp: Network {
+    private let session: URLSession = .shared
     
     func requestData(_ url: URL) async throws -> Data {
         let (data, response) = try await session.data(from: url)
