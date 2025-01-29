@@ -9,31 +9,24 @@ import SwiftUI
 
 final class ImageCacheService: Sendable {
     private let network: Network
-    private let cache: URLCache
+    private let cache: ImageCache
     
-    init(network: Network = NetworkImp(), cache: URLCache = URLCache()) {
+    init(network: Network = NetworkImp(), cache: ImageCache = ImageCache()) {
         self.network = network
         self.cache = cache
     }
     
     func getImage(for url: URL) async throws -> UIImage {
-        let data = try await getImageData(for: url)
-        guard let image = UIImage(data: data) else { throw ImageError.badImageData }
-        
-        return image
-    }
-    
-    private func getImageData(for url: URL) async throws -> Data {
-        let request = URLRequest(url: url)
-        if let data = cache.cachedResponse(for: request)?.data {
-            return data
+        if let image = await cache.getImage(for: url.absoluteString) {
+            return image
         }
         
-        let result = try await network.requestData(url)
+        let data = try await network.requestData(url)
+        guard let image = UIImage(data: data) else { throw ImageError.badImageData }
         
-        cache.storeCachedResponse(.init(response: result.1, data: result.0), for: request)
+        await cache.setImage(for: url.absoluteString, image: image)
         
-        return result.0
+        return image
     }
 }
 

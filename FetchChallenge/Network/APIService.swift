@@ -20,8 +20,14 @@ final class APIServiceImp: APIService {
     
     func getRecipes() async throws -> [Recipe] {
         let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
+//        let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json"
+//        let urlString = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json"
+        
         let url = URL(string: urlString)!
         let response: RecipeResponse = try await network.requestObject(url)
         return response.recipes ?? []
     }
 }
+
+
+
