@@ -13,8 +13,8 @@ The Recipe app consists of a single screen with a list of recipes. Upon opening 
 <img width=420 src="Screenshots/NavigateToExternal.png"/>
 
 - Filter by cuisine
--- Allows to filter all recipes by a cuisine type
--- When the filter is selected the icon changes to its filled version
+  - Allows to filter all recipes by a cuisine type
+  - When the filter is selected the icon changes to its filled version
 
 <img width=420 src="Screenshots/Filtering.png"/>
 
@@ -23,13 +23,13 @@ The Recipe app consists of a single screen with a list of recipes. Upon opening 
 - The tags on each album cell are scrollable if they are too long and don't fit.
 
 - Settings screen:
--- A modal sheet that allows you to select the app color scheme: light, dark, or automatic/system
--- Haptic feedback when switching between options
+  - A modal sheet that allows you to select the app color scheme: light, dark, or automatic/system
+  - Haptic feedback when switching between options
 
 <img width=420 src="Screenshots/DarkTheme.png"/>
 
 - Localization
--- All strings are added to a String Catalog which makes the app localization ready
+  - All strings are added to a String Catalog which makes the app localization ready
 
 - Unit tests
 
