@@ -2,21 +2,21 @@
 
 The Recipe app consists of a single screen with a list of recipes. Upon opening the app, it loads a list of recipes. 
 
-![Main Screen](Screenshots/MainScreen.png =420x)
-![EmptyRecipes](Screenshots/EmptyRecipes.png =420x)
-![ErrorScreen](Screenshots/ErrorScreen.png =420x)
+<img width=420 src="Screenshots/MainScreen.png"/>
+<img width=420 src="Screenshots/EmptyRecipes.png"/>
+<img width=420 src="Screenshots/ErrorScreen.png"/>
 
 ### Extra Features
 
 - Tapping on a recipe opens a confirmation dialog that allows you to navigate to a YouTube page or the recipe source if available.
 
-![NavigateToExternal](Screenshots/NavigateToExternal.png =420x)
+<img width=420 src="Screenshots/NavigateToExternal.png"/>
 
 - Filter by cuisine
 -- Allows to filter all recipes by a cuisine type
 -- When the filter is selected the icon changes to its filled version
 
-![Filtering](Screenshots/Filtering.png =420x)
+<img width=420 src="Screenshots/Filtering.png"/>
 
 - Search by recipe name or cuisine
 
@@ -26,7 +26,7 @@ The Recipe app consists of a single screen with a list of recipes. Upon opening 
 -- A modal sheet that allows you to select the app color scheme: light, dark, or automatic/system
 -- Haptic feedback when switching between options
 
-![DarkTheme](Screenshots/DarkTheme.png =420x)
+<img width=420 src="Screenshots/DarkTheme.png"/>
 
 - Localization
 -- All strings are added to a String Catalog which makes the app localization ready
