@@ -42,7 +42,7 @@ I wanted users to have the best experience with the app, so I focused on creatin
 
 ### Time Spent: Approximately how long did you spend working on this project? How did you allocate your time?
 
-I spent about 12 hours building this project.
+I spent about 8 hours building this project.
 - First I created the networking code and got the data from the server.
 - After retrieving the data, I started working on the UI.
 - Then I created the image cacher.
